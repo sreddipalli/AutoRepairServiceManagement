@@ -28,7 +28,7 @@ public class CategoryController {
 
   CategoryDetailsService categoryDetailsService;
 
-  @GetMapping(value = "/servicemanagement/api/v1.0/category")
+  @GetMapping(value = "/servicemanagement/api/v1.0/public/category")
   ResponseEntity<Response<List<CategoryDetailsResponse>>> getServiceList() {
 
     log.info("get the Service list");
@@ -38,7 +38,7 @@ public class CategoryController {
     return new ResponseEntity<>(Response.success(categoryDetailsList), HttpStatus.OK);
   }
 
-  @GetMapping(value = "/servicemanagement/api/v1.0/category/{categoryId}")
+  @GetMapping(value = "/servicemanagement/api/v1.0/public/category/{categoryId}")
   ResponseEntity<Response<CategoryDetailsResponse>> getcategoryDetailsV1(
       @PathVariable("categoryId") String categoryId) {
     log.info("inputs categoryId to get the category details {}", categoryId);
