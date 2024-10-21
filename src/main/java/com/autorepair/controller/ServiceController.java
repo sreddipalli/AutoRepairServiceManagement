@@ -46,6 +46,15 @@ public class ServiceController {
         serviceDetailsService.getServiceDetailsById(serviceId);
     return new ResponseEntity<>(Response.success(serviceDetailsResponse), HttpStatus.OK);
   }
+  
+  @GetMapping(value = "/servicemanagement/api/v1.0/category/{categoryId}/services")
+  ResponseEntity<Response<ServiceDetailsResponse>> getServiceDetailsByCategoryV1(
+      @PathVariable("categoryId") String categoryId) {
+    log.info("inputs serviceId to get the service details {}", categoryId);
+    ServiceDetailsResponse serviceDetailsResponse =
+        serviceDetailsService.getServiceDetailsByCategoryId(categoryId);
+    return new ResponseEntity<>(Response.success(serviceDetailsResponse), HttpStatus.OK);
+  }
 
   @PostMapping(value = "/servicemanagement/api/v1.0/service")
   ResponseEntity<Response<ServiceDetailsResponse>> createServiceDetailsV1(

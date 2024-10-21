@@ -11,10 +11,13 @@ public interface ServiceDetailsService {
   List<ServiceDetailsResponse> getAllServiceDetails();
 
   ServiceDetailsResponse getServiceDetailsById(String serviceId);
+  
+  ServiceDetailsResponse getServiceDetailsByCategoryId(String categoryId);
 
   ServiceDetailsResponse saveServiceDetails(ServiceDetailsRequest serDetailsRequest);
 
   ServiceDetailsResponse updateServiceDetails(String serviceId, ServiceDetailsRequest serDetailsRequest);
 
   ServiceDetailsResponse deleteServiceDetails(String serviceId);
+
 }

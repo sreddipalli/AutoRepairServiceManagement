@@ -71,6 +71,26 @@ public class ServiceDetailsServiceImpl implements ServiceDetailsService {
     log.info(SERVICE_RESPONSE, serviceResponse);
     return serviceResponse;
   }
+  
+  @Override
+  public ServiceDetailsResponse getServiceDetailsByCategoryId(String categoryId) {
+    Optional<ServiceDetails> serviceDetails = serviceRepository.findByCategoryId(categoryId);
+
+    log.info(LOG_SERVICE_DETAILS, serviceDetails);
+
+    if (!serviceDetails.isPresent()) {
+      log.error(SERVICE_ERROR_MSG);
+      log.error(SERVICE_ERROR_MSG);
+      throw new ResourceNotFoundException(ServiceConstants.INPUT_ERROR_CODE, ERROR_SERVICE_DETAILS,
+          categoryId);
+    }
+
+    ServiceDetailsResponse serviceResponse =
+        modelMapper.map(serviceDetails, ServiceDetailsResponse.class);
+
+    log.info(SERVICE_RESPONSE, serviceResponse);
+    return serviceResponse;
+  }
 
   @Override
   @SneakyThrows
@@ -139,4 +159,5 @@ public class ServiceDetailsServiceImpl implements ServiceDetailsService {
 
     return null;
   }
+
 }
