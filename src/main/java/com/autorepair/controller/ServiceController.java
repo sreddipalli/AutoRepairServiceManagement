@@ -28,7 +28,7 @@ public class ServiceController {
 
   ServiceDetailsService serviceDetailsService;
 
-  @GetMapping(value = "/servicemanagement/api/v1.0/services")
+  @GetMapping(value = "/servicemanagement/api/v1.0/public/services")
   ResponseEntity<Response<List<ServiceDetailsResponse>>> getServiceList() {
 
     log.info("get the Service list");
@@ -38,7 +38,7 @@ public class ServiceController {
     return new ResponseEntity<>(Response.success(serviceResponseWrapperList), HttpStatus.OK);
   }
 
-  @GetMapping(value = "/servicemanagement/api/v1.0/service/{serviceId}")
+  @GetMapping(value = "/servicemanagement/api/v1.0/public/service/{serviceId}")
   ResponseEntity<Response<ServiceDetailsResponse>> getServiceDetailsV1(
       @PathVariable("serviceId") String serviceId) {
     log.info("inputs serviceId to get the service details {}", serviceId);
