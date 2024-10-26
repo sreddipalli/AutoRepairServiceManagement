@@ -42,9 +42,9 @@ public class CategoryController {
   ResponseEntity<Response<CategoryDetailsResponse>> getcategoryDetailsV1(
       @PathVariable("categoryId") String categoryId) {
     log.info("inputs categoryId to get the category details {}", categoryId);
-    CategoryDetailsResponse CategoryDetailsResponse =
+    CategoryDetailsResponse categoryDetailsResponse =
         categoryDetailsService.getCategoryDetailsById(categoryId);
-    return new ResponseEntity<>(Response.success(CategoryDetailsResponse), HttpStatus.OK);
+    return new ResponseEntity<>(Response.success(categoryDetailsResponse), HttpStatus.OK);
   }
 
   @PostMapping(value = "/servicemanagement/api/v1.0/category")

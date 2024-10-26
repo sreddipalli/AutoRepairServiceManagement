@@ -46,5 +46,4 @@ public class CategoryDetails {
     private String type;
     private List<String> options;
   }
-
 }
