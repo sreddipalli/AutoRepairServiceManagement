@@ -73,23 +73,22 @@ public class ServiceDetailsServiceImpl implements ServiceDetailsService {
   }
   
   @Override
-  public ServiceDetailsResponse getServiceDetailsByCategoryId(String categoryId) {
-    Optional<ServiceDetails> serviceDetails = serviceRepository.findByCategoryId(categoryId);
+  public List<ServiceDetailsResponse> getServiceDetailsByCategoryId(String categoryId) {
+    Optional<ServiceDetails> serviceList = serviceRepository.findByCategoryId(categoryId);
 
-    log.info(LOG_SERVICE_DETAILS, serviceDetails);
+    log.info(LOG_SERVICE_DETAILS, serviceList);
 
-    if (!serviceDetails.isPresent()) {
-      log.error(SERVICE_ERROR_MSG);
-      log.error(SERVICE_ERROR_MSG);
-      throw new ResourceNotFoundException(ServiceConstants.INPUT_ERROR_CODE, ERROR_SERVICE_DETAILS,
-          categoryId);
-    }
+    List<ServiceDetailsResponse> serviceResponseWrappers =
+        serviceList.stream().map(serviceDetails -> {
+          ServiceDetailsResponse serviceResponse = new ServiceDetailsResponse();
+          serviceResponse = modelMapper.map(serviceDetails, ServiceDetailsResponse.class);
 
-    ServiceDetailsResponse serviceResponse =
-        modelMapper.map(serviceDetails, ServiceDetailsResponse.class);
+          log.info("Mapped Service Details vendorResponse:{}", serviceResponse);
+          return serviceResponse;
+        }).toList();
 
-    log.info(SERVICE_RESPONSE, serviceResponse);
-    return serviceResponse;
+    log.info("Mapped Service Details :{}", serviceResponseWrappers);
+    return serviceResponseWrappers;
   }
 
   @Override

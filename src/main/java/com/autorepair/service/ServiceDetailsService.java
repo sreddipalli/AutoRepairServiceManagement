@@ -12,7 +12,7 @@ public interface ServiceDetailsService {
 
   ServiceDetailsResponse getServiceDetailsById(String serviceId);
   
-  ServiceDetailsResponse getServiceDetailsByCategoryId(String categoryId);
+  List<ServiceDetailsResponse> getServiceDetailsByCategoryId(String categoryId);
 
   ServiceDetailsResponse saveServiceDetails(ServiceDetailsRequest serDetailsRequest);
 

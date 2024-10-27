@@ -72,16 +72,6 @@ public class VehicleDetailsServiceImpl implements VehicleDetailsService {
           return vehicleResponse;
         }).toList();
     log.info("Mapped Service Details :{}", vehicleResponseWrappers);
-    
-    Query query = new Query();
-    
-    // Add custom criteria to the query
-    query.addCriteria(Criteria.where("make").is("Jeep"));
-    query.addCriteria(Criteria.where("model").is("Cherokee 2WD"));
-    
-    List<String> makes = mongoTemplate.findDistinct(query, "year", VehicleDetails.class, String.class);
-    
-    log.info("Makes : {}", makes);
 
     return vehicleResponseWrappers;
   }
