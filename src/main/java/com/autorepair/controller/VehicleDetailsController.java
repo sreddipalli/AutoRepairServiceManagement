@@ -28,7 +28,7 @@ public class VehicleDetailsController {
 
   VehicleDetailsService vehicleDetailsService;
 
-  @GetMapping(value = "/servicemanagement/api/v1.0/vehicles")
+  @GetMapping(value = "/servicemanagement/api/v1.0/public/vehicles")
   ResponseEntity<Response<List<VehicleDetailsResponse>>> getVehicleList() {
 
     log.info("get the Vehicle list");
@@ -38,7 +38,7 @@ public class VehicleDetailsController {
     return new ResponseEntity<>(Response.success(vehicleResponseWrapperList), HttpStatus.OK);
   }
 
-  @GetMapping(value = "/servicemanagement/api/v1.0/vehicle/{make}")
+  @GetMapping(value = "/servicemanagement/api/v1.0/public/vehicle/{make}")
   ResponseEntity<Response<List<VehicleDetailsResponse>>> getVehiclesDetailsV1(
       @PathVariable("make") String make) {
     log.info("inputs make details to get the vehicle details {}", make);
@@ -47,7 +47,7 @@ public class VehicleDetailsController {
     return new ResponseEntity<>(Response.success(vehicleDetailsResponse), HttpStatus.OK);
   }
   
-  @GetMapping(value = "/servicemanagement/api/v1.0/vehicle/{make}/{model}")
+  @GetMapping(value = "/servicemanagement/api/v1.0/public/vehicle/{make}/{model}")
   ResponseEntity<Response<List<VehicleDetailsResponse>>> getVehicleDetailsV1(
       @PathVariable("make") String make, @PathVariable("model") String model) {
     log.info("inputs to get the vehicle details make :{}, model :{}", make, model);
@@ -56,7 +56,7 @@ public class VehicleDetailsController {
     return new ResponseEntity<>(Response.success(vehicleDetailsResponse), HttpStatus.OK);
   }
   
-  @GetMapping(value = "/servicemanagement/api/v1.0/vehicle/makes")
+  @GetMapping(value = "/servicemanagement/api/v1.0/public/vehicle/makes")
   ResponseEntity<Response<List<String>>> getVehicleMakes(){
     log.info("inputs make details to get the vehicle makes");
     List<String> makeslDetails =
@@ -64,7 +64,7 @@ public class VehicleDetailsController {
     return new ResponseEntity<>(Response.success(makeslDetails), HttpStatus.OK);
   }
   
-  @GetMapping(value = "/servicemanagement/api/v1.0/vehicle/model/{make}")
+  @GetMapping(value = "/servicemanagement/api/v1.0/public/vehicle/model/{make}")
   ResponseEntity<Response<List<String>>> getVehicleModels(
       @PathVariable("make") String make) {
     log.info("inputs make details to get the vehicle models {}", make);
@@ -73,7 +73,7 @@ public class VehicleDetailsController {
     return new ResponseEntity<>(Response.success(modelDetails), HttpStatus.OK);
   }
   
-  @GetMapping(value = "/servicemanagement/api/v1.0/vehicle/years/{make}/{model}")
+  @GetMapping(value = "/servicemanagement/api/v1.0/public/vehicle/years/{make}/{model}")
   ResponseEntity<Response<List<String>>> getVehicleModelYears(
       @PathVariable("make") String make, @PathVariable("model") String model) {
     log.info("inputs to get the vehicle details make :{}, model :{}", make, model);
@@ -82,7 +82,7 @@ public class VehicleDetailsController {
     return new ResponseEntity<>(Response.success(modelDetails), HttpStatus.OK);
   }
   
-  @PostMapping(value = "/servicemanagement/api/v1.0/vehicle")
+  @PostMapping(value = "/servicemanagement/api/v1.0/public/vehicle")
   ResponseEntity<Response<VehicleDetailsResponse>> createVehicleDetailsV1(
       @RequestBody VehicleDetailsRequest vehicleDetailsRequest, BindingResult bindingResult) {
     log.info("creating new vehicle details :{}", vehicleDetailsRequest);
@@ -98,7 +98,7 @@ public class VehicleDetailsController {
     return new ResponseEntity<>(Response.success(vehicleDetailsResponse), HttpStatus.OK);
   }
 
-  @PutMapping(value = "/servicemanagement/api/v1.0/vehicle/{vehicleId}")
+  @PutMapping(value = "/servicemanagement/api/v1.0/public/vehicle/{vehicleId}")
   ResponseEntity<Response<VehicleDetailsResponse>> updateVehicleDetailsV1(
       @PathVariable("vehicleId") String vehicleId,
       @RequestBody @Validated VehicleDetailsRequest vehicleDetailsRequest,
@@ -120,7 +120,7 @@ public class VehicleDetailsController {
         HttpStatus.BAD_REQUEST);
   }
 
-  @DeleteMapping(value = "/servicemanagement/api/v1.0/vehicle/{vehicleId}")
+  @DeleteMapping(value = "/servicemanagement/api/v1.0/public/vehicle/{vehicleId}")
   ResponseEntity<Response<VehicleDetailsResponse>> deleteVehicleDetailsV1(
       @PathVariable("vehicleId") String vehicleId, BindingResult bindingResult) {
     log.info("updating vehicle details for vehicleId: {}", vehicleId);
