@@ -49,10 +49,17 @@ public class OAuth2LoginSecurityConfig {
 
     return http.csrf(AbstractHttpConfigurer::disable)
         .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-        .authorizeHttpRequests(auth -> auth.requestMatchers("/servicemanagement/api/v1.0/public/**", "/vendorservice/api/v1.0/vendors/**").permitAll().anyRequest().authenticated())
+        // .authorizeHttpRequests(auth ->
+        // auth.requestMatchers("/servicemanagement/api/v1.0/public/**")
+        // .permitAll().requestMatchers("/vendorservice/api/v1.0/vendors/**").permitAll()
+        // .anyRequest().permitAll()) // Allow all requests temporarily for testing
+        .authorizeHttpRequests(auth -> auth// ✅ Ensure public APIs are fully accessible
+            .requestMatchers("/servicemanagement/api/v1.0/public/**").permitAll()
+            .requestMatchers("/vendorservice/api/v1.0/vendors/**").permitAll().anyRequest()
+            .authenticated()) // ✅ Secure other APIs
         .oauth2ResourceServer(oauth2 -> oauth2
             .jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter())))
-        .build(); 
+        .build();
   }
   
   @Bean
@@ -85,10 +92,22 @@ public class OAuth2LoginSecurityConfig {
 
   @Bean
   CorsConfigurationSource corsConfigurationSource() {
-    CorsConfiguration configuration = new CorsConfiguration();
-    configuration.setAllowedOrigins(List.of(frontendUrl));
-    configuration.addAllowedHeader("*");
-    configuration.addAllowedMethod("*");
+   CorsConfiguration configuration = new CorsConfiguration();
+    // ✅ Fix: Use allowedOriginPatterns instead of allowedOrigins
+    // configuration.setAllowedOriginPatterns(Arrays.asList("*"));
+    // ✅ Allow frontend URLs (including localhost for testing)
+    configuration.setAllowedOriginPatterns(Arrays.asList("http://localhost:4200",
+        "https://pro.autoreviv.com", "https://autoreviv.com", "https://www.autoreviv.com"));
+
+    // configuration.addAllowedOrigin("*");
+    // ✅ Allowed HTTP methods
+    configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+
+    // ✅ Allowed headers (DO NOT include "Access-Control-Allow-Origin" here)
+    configuration
+        .setAllowedHeaders(Arrays.asList("Origin", "Content-Type", "Accept", "Authorization"));
+
+    // ✅ Allow credentials (only if specific origins are defined)
     configuration.setAllowCredentials(true);
     UrlBasedCorsConfigurationSource urlBasedCorsConfigurationSource =
         new UrlBasedCorsConfigurationSource();
